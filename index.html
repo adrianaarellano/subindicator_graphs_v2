@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Map Selector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    select {
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    iframe {
+      border: none;
+      width: 80%;
+      height: 700px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Map Selector</h1>
+  <p>Choose an indicator category and then select a specific indicator to explore the interactive map.</p>
+
+  <!-- Dropdown for category (Policy or Practice) -->
+  <label for="categorySelector">Select Category:</label>
+  <select id="categorySelector" onchange="updateIndicatorDropdown()">
+    <option value="" disabled selected>Select Category</option>
+    <option value="policy">Policy</option>
+    <option value="practice">Practice</option>
+  </select>
+
+  <!-- Dropdown for specific indicators -->
+  <label for="indicatorSelector">Select Indicator:</label>
+  <select id="indicatorSelector" onchange="switchMap()" disabled>
+    <option value="" disabled selected>Select Indicator</option>
+  </select>
+
+  <!-- The iframe container -->
+  <iframe id="mapFrame" src="about:blank">
+    Your browser does not support iframes.
+  </iframe>
+
+  <script>
+    // Predefined mapping for Policy and Practice indicators
+    const indicators = {
+      policy: {
+        "Curriculum: Number of Aims": "https://adrianaarellano.github.io/subindic_policy_cur_aim_ns/",
+        "Curriculum: Common Programs": "https://adrianaarellano.github.io/subindic_policy_cur_diff_pro_ns/",
+        "Curriculum: Formal CE Requirement": "https://adrianaarellano.github.io/subindic_policy_cur_formal_ns/",
+        "Curriculum: Number of Topics": "https://adrianaarellano.github.io/subindic_policy_cur_topic_ns/",
+        "Pedagogy: Number of Guidelines": "https://adrianaarellano.github.io/subindic_policy_ped_ns/",
+        "Pedagogy: Number of Objectives": "https://adrianaarellano.github.io/subindic_policy_ped_objective_ns/",
+        "Ethos: Guidelines": "https://adrianaarellano.github.io/subindic_policy_ethos_ns/",
+        "Track: Age of Selection": "https://adrianaarellano.github.io/subindic_track_age_selection_ns/",
+        "Training: In-Service": "https://adrianaarellano.github.io/subindic_policy_train_inservice_ns/",
+        "Training: Mandatory": "https://adrianaarellano.github.io/subindic_train_policy_madatory_ns/",
+        "Centralization: Assessment": "https://adrianaarellano.github.io/subindic_policy_auto_assessment_ns/",
+        "Centralization: Curricula": "https://adrianaarellano.github.io/subindic_policy_auto_nc_epsm_ns/",
+        "Compulsory Years": "https://adrianaarellano.github.io/subindic_policy_compuls_years_ns/"
+      },
+      practice: {
+        "Curriculum: Outside Activities": "https://adrianaarellano.github.io/subindic_practice_cur_outside_ns/",
+        "Pedagogy: Student Elections": "https://adrianaarellano.github.io/subindic_practice_ped_vote_ns/",
+        "Pedagogy: Active Participation": "https://adrianaarellano.github.io/subindic_practice_ped_active_par_ns/",
+        "Pedagogy: Open Discussion": "https://adrianaarellano.github.io/subindic_practice_ped_open_dis_ns/",
+        "Pedagogy: Opinion on Participation": "https://adrianaarellano.github.io/subindic_practice_ped_opinion_par_ns/",
+        "Pedagogy: Classroom Climate": "https://adrianaarellano.github.io/subindic_practice_ped_open_class_ns/",
+        "Ethos: Teacher Participation": "https://adrianaarellano.github.io/subindic_practice_teacher_ns/",
+        "Ethos: Student Involvement": "https://adrianaarellano.github.io/subindic_practice_ethos_school_ns/",
+        "Centralization: CE Activities": "https://adrianaarellano.github.io/subindic_practice_auto_school_ns/",
+        "Centralization: Official Curricula": "https://adrianaarellano.github.io/subindic_practice_auto_teacher_ns/",
+        "Track: Average Grouping": "https://adrianaarellano.github.io/subindic_practice_track_group_ns/"
+      }
+    };
+
+    // Function to update Indicator dropdown based on category
+    function updateIndicatorDropdown() {
+      const category = document.getElementById("categorySelector").value;
+      const indicatorSelector = document.getElementById("indicatorSelector");
+
+      // Clear the previous options
+      indicatorSelector.innerHTML = '<option value="" disabled selected>Select Indicator</option>';
+
+      if (category) {
+        const options = indicators[category];
+        for (const [label, url] of Object.entries(options)) {
+          const option = document.createElement("option");
+          option.value = url;
+          option.textContent = label;
+          indicatorSelector.appendChild(option);
+        }
+        indicatorSelector.disabled = false;
+      } else {
+        indicatorSelector.disabled = true;
+      }
+    }
+
+    // Function to switch the iframe source
+    function switchMap() {
+      const selectedURL = document.getElementById("indicatorSelector").value;
+      const mapFrame = document.getElementById("mapFrame");
+
+      // Update the iframe source
+      mapFrame.src = selectedURL || "about:blank";
+    }
+  </script>
+</body>
+</html>
