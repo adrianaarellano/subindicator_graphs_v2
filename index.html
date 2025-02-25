@@ -5,21 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interactive Map Selector</title>
   <style>
+    /* General styling */
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      margin: 20px;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
     }
-    select {
-      margin-bottom: 20px;
-      padding: 10px;
+
+    /* Header section */
+    h1 {
+      margin-top: 30px;
+      font-size: 28px;
+      color: #333;
+    }
+
+    p {
       font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
     }
+
+    /* Centered dropdown */
+    .dropdown-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: 0.3s ease-in-out;
+    }
+
+    select:hover {
+      border-color: #007bff;
+    }
+
+    /* Iframe styling */
+    .iframe-container {
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
     iframe {
       border: none;
-      width: 80%;
+      width: 90%;
+      max-width: 1200px;
       height: 700px;
-      margin-top: 20px;
+      border-radius: 8px;
+      box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      iframe {
+        width: 95%;
+        height: 500px;
+      }
+
+      select {
+        font-size: 14px;
+        padding: 10px;
+      }
     }
   </style>
 </head>
@@ -27,24 +86,27 @@
   <h1>Interactive Map Selector</h1>
   <p>Choose an indicator category and then select a specific indicator to explore the interactive map.</p>
 
-  <!-- Dropdown for category (Policy or Practice) -->
-  <label for="categorySelector">Select Category:</label>
-  <select id="categorySelector" onchange="updateIndicatorDropdown()">
-    <option value="" disabled selected>Select Category</option>
-    <option value="policy">Policy</option>
-    <option value="practice">Practice</option>
-  </select>
+  <!-- Centered dropdown -->
+  <div class="dropdown-container">
+    <label for="categorySelector">Select Category:</label>
+    <select id="categorySelector" onchange="updateIndicatorDropdown()">
+      <option value="" disabled selected>Select Category</option>
+      <option value="policy">Policy</option>
+      <option value="practice">Practice</option>
+    </select>
 
-  <!-- Dropdown for specific indicators -->
-  <label for="indicatorSelector">Select Indicator:</label>
-  <select id="indicatorSelector" onchange="switchMap()" disabled>
-    <option value="" disabled selected>Select Indicator</option>
-  </select>
+    <label for="indicatorSelector">Select Indicator:</label>
+    <select id="indicatorSelector" onchange="switchMap()" disabled>
+      <option value="" disabled selected>Select Indicator</option>
+    </select>
+  </div>
 
   <!-- The iframe container -->
-  <iframe id="mapFrame" src="about:blank">
-    Your browser does not support iframes.
-  </iframe>
+  <div class="iframe-container">
+    <iframe id="mapFrame" src="about:blank">
+      Your browser does not support iframes.
+    </iframe>
+  </div>
 
   <script>
     // Predefined mapping for Policy and Practice indicators
@@ -63,7 +125,7 @@
         "Unitary System: School Governance": "https://adrianaarellano.github.io/subindic_policy_auto_gov_ns/",
         "Unitary System: Teacher Recruitment": "https://adrianaarellano.github.io/subindic_policy_auto_recruit_ns/",
         "Unitary System: Curriculum Implementation": "https://adrianaarellano.github.io/subindic_policy_auto_cur_del_ns/",
-        "Common Education:: Age of Selection": "https://adrianaarellano.github.io/subindic_track_age_selection_ns/",
+        "Common Education: Age of Selection": "https://adrianaarellano.github.io/subindic_track_age_selection_ns/",
         "Compulsory Years": "https://adrianaarellano.github.io/subindic_policy_compuls_years_ns/"
       },
       practice: {
